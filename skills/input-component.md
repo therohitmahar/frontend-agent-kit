@@ -154,3 +154,5 @@ Use `useId` when an explicit `id` is not passed.
 Support `aria-invalid` and `aria-describedby` for inline errors.
 
 Do not build separate one-off input components unless the field has genuinely different behavior.
+
+If the project already has a reusable input, improve that component instead of creating a second input abstraction.

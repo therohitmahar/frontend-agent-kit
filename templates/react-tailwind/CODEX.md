@@ -78,13 +78,14 @@ function Button({
   };
 
   const isDisabled = disabled || loading;
+  const selectedVariant = variantClasses[variant] || variantClasses.primary;
 
   return (
     <button
       type={type}
       disabled={isDisabled}
       aria-busy={loading}
-      className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+      className={`${baseClasses} ${selectedVariant} ${className}`}
       {...props}
     >
       {loading ? (

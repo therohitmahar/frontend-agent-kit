@@ -51,7 +51,10 @@ function Button({ children, loading = false, disabled = false, type = "button", 
       {...props}
     >
       {loading ? (
-        <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+        <span
+          className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
+          aria-hidden="true"
+        />
       ) : null}
       {children}
     </button>
@@ -96,9 +99,14 @@ function ErrorState({ onRetry, retrying }) {
 export default function ProjectList() {
   const [projects, setProjects] = useState([]);
   const [status, setStatus] = useState("loading");
+  const [isRetrying, setIsRetrying] = useState(false);
 
-  async function loadProjects() {
-    setStatus("loading");
+  async function loadProjects({ retry = false } = {}) {
+    if (retry) {
+      setIsRetrying(true);
+    } else {
+      setStatus("loading");
+    }
 
     try {
       const response = await fetch("/api/projects");
@@ -112,6 +120,8 @@ export default function ProjectList() {
       setStatus("success");
     } catch (error) {
       setStatus("error");
+    } finally {
+      setIsRetrying(false);
     }
   }
 
@@ -124,7 +134,12 @@ export default function ProjectList() {
   }
 
   if (status === "error") {
-    return <ErrorState onRetry={loadProjects} retrying={status === "loading"} />;
+    return (
+      <ErrorState
+        onRetry={() => loadProjects({ retry: true })}
+        retrying={isRetrying}
+      />
+    );
   }
 
   if (projects.length === 0) {
@@ -155,3 +170,5 @@ Errors should be visible to the user and should usually include a retry action.
 Do not rely only on `console.error`.
 
 Every async data view needs all three states: loading, empty, and error.
+
+Use small shared state components when several screens need the same loading, empty, or error layout.

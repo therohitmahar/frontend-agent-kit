@@ -74,13 +74,14 @@ export default function ContactForm() {
 ```jsx
 import { useId, useState } from "react";
 
-function Button({ children, loading = false, disabled = false, type = "button" }) {
+function Button({ children, loading = false, disabled = false, type = "button", ...props }) {
   return (
     <button
       type={type}
       disabled={disabled || loading}
       aria-busy={loading}
       className="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+      {...props}
     >
       {loading ? (
         <span
@@ -168,7 +169,10 @@ function Toast({ toast, onClose }) {
   };
 
   return (
-    <div className={`rounded-md border px-4 py-3 text-sm ${classes[toast.type]}`}>
+    <div
+      role="status"
+      className={`rounded-md border px-4 py-3 text-sm ${classes[toast.type]}`}
+    >
       <div className="flex items-start justify-between gap-4">
         <p>{toast.message}</p>
         <button type="button" onClick={onClose} className="font-medium">
@@ -309,3 +313,5 @@ The submit button must be disabled while the request is running.
 Use a guard at the top of submit handlers to prevent duplicate submissions.
 
 Show a toast for both success and failure.
+
+If the project already has shared `Button`, `Input`, `Textarea`, or toast components, use those instead of copying the baseline components into the same file.

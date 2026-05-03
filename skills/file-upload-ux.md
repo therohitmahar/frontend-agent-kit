@@ -57,7 +57,10 @@ function Button({ children, loading = false, disabled = false, type = "button", 
       {...props}
     >
       {loading ? (
-        <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+        <span
+          className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
+          aria-hidden="true"
+        />
       ) : null}
       {children}
     </button>
@@ -76,7 +79,10 @@ function Toast({ toast, onClose }) {
   };
 
   return (
-    <div className={`rounded-md border px-4 py-3 text-sm ${classes[toast.type]}`}>
+    <div
+      role="status"
+      className={`rounded-md border px-4 py-3 text-sm ${classes[toast.type]}`}
+    >
       <div className="flex items-start justify-between gap-4">
         <p>{toast.message}</p>
         <button type="button" onClick={onClose} className="font-medium">
@@ -200,3 +206,5 @@ Disable file selection and submit actions while uploading when changing the file
 Show info feedback when upload starts, success feedback when it completes, and error feedback when it fails.
 
 Do not install an upload library unless the user explicitly asks for one.
+
+If uploads have a server-side processing phase after transfer, keep showing a visible processing state until the server reports completion or failure.

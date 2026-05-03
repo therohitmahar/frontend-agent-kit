@@ -1,42 +1,66 @@
-# Stop re-explaining your frontend standards to every AI session.
+# frontend-agent-kit
 
-`frontend-agent-kit` is a copy-paste instruction kit for developers who want AI coding agents to build React + Tailwind interfaces with consistent components, visible feedback, and complete UI states. It is for developers who care about their code and do not want to add a library for everything. It is not for vibe coders.
+Copy-paste frontend standards for AI coding agents working in React + Tailwind projects.
+
+Use this kit when you want agents to create reusable components, show visible feedback, validate forms before API calls, and handle loading, empty, and error states without adding unnecessary dependencies.
 
 ## Why this exists
 
-AI agents forget your frontend standards unless you restate them every session. This repo was born from repeatedly telling Codex the same frontend standards on every new project: reusable buttons, proper inputs, visible feedback, real form validation, upload progress, and complete loading, empty, and error states.
+AI agents will often produce working UI that is still incomplete: one-off buttons, duplicated input classes, silent writes, vague form errors, silent uploads, and blank data views.
+
+This repo gives you reusable instruction files and focused skill files so those standards travel with the project instead of being re-explained in every session.
+
+## What is included
+
+- `CODEX.md`: primary instruction file for OpenAI Codex
+- `CLAUDE.md`: equivalent instruction file for Claude
+- `AGENTS.md`: generic agent instruction file
+- `skills/`: focused copy-paste standards for one frontend concern at a time
+- `templates/react-tailwind/CODEX.md`: combined React + Tailwind instruction template with baseline component snippets
 
 ## How to use
 
-Option 1: Copy `CODEX.md` into your project root. This is the primary path for OpenAI Codex.
+Pick the smallest file that fits your project.
 
-Option 2: Copy `CLAUDE.md` or `AGENTS.md` into your project root if you use a different agent.
+1. Copy `CODEX.md` into your project root if you use OpenAI Codex.
+2. Copy `CLAUDE.md` or `AGENTS.md` into your project root if you use another agent.
+3. Copy individual files from `skills/` when you only want one standard.
+4. Copy `templates/react-tailwind/CODEX.md` when you want the complete React + Tailwind version with baseline code examples.
 
-Option 3: Copy individual skill files from `/skills` when you only want one standard.
-
-Option 4: Use the full combined template from `/templates/react-tailwind/`.
-
-No install. No CLI. No dependencies. Copy a file. Ship better frontend.
+No install. No CLI. No dependencies.
 
 ## Skills
 
-| Skill name | Description | Problem it solves |
-| --- | --- | --- |
-| Button component | Defines reusable primary and secondary buttons with loading and disabled states. | Prevents async actions from staying clickable and eliminates one-off button code. |
-| Input component | Defines labeled, required-aware, typed inputs with internal logic. | Prevents inconsistent labels, missing required markers, and duplicated input handling. |
-| Forms and validation | Defines client validation, inline errors, submit loading, and success feedback. | Prevents silent or invalid API calls and weak form UX. |
-| Toast and feedback | Defines consistent success, error, and info feedback after user actions. | Prevents user actions from completing silently. |
-| Loading, empty, error states | Defines required UI states for every data-backed interface. | Prevents blank screens and incomplete production flows. |
-| File upload UX | Defines visible progress or loading during upload and processing. | Prevents silent uploads and unclear file processing. |
+| File | Use when you want the agent to... |
+| --- | --- |
+| `skills/button-component.md` | Create a reusable `Button` with primary and secondary variants, loading state, spinner, and disabled async behavior. |
+| `skills/input-component.md` | Create a reusable labeled `Input` with required markers, native `type`, inline errors, and consistent styling. |
+| `skills/forms-and-validation.md` | Validate before API calls, show inline errors, prevent duplicate submits, and toast success or failure. |
+| `skills/toast-and-feedback.md` | Make saves, deletes, uploads, copies, sends, and status changes visibly acknowledge success, error, or progress. |
+| `skills/loading-empty-error-states.md` | Render complete loading, empty, and error states for data-backed UIs. |
+| `skills/file-upload-ux.md` | Show upload progress or visible loading, disable conflicting actions, and report completion or failure. |
 
 ## Philosophy
 
-1. Native first — no library unless you ask for one
-2. Production quality — loading, empty, error states are not optional
-3. Composable — use one skill or all of them
+- Native first: use browser APIs, React, and small local utilities before dependencies.
+- Reusable components: repeated UI and behavior belongs in a component or utility.
+- Complete states: loading, empty, error, disabled, success, and failure states are part of the feature.
+- Visible feedback: user actions should never complete silently.
+- Practical scope: keep the project small unless the user explicitly asks for more.
+
+## Recommended Review Checklist
+
+- Buttons use a reusable `Button` component.
+- Async actions show loading and disable conflicting controls.
+- Inputs use a reusable `Input` component with labels and required markers.
+- Forms validate on the client before API calls.
+- Field errors are inline and specific.
+- User actions show success, error, or info feedback.
+- File uploads show progress or clear loading and processing states.
+- Data-backed UIs handle loading, empty, and error states.
+- No dependency was added unless explicitly requested.
+- Styling uses Tailwind utilities only.
 
 ## Contributing
 
 See `CONTRIBUTING.md`.
-
-Not for everyone. Built for developers who know what good frontend looks like.

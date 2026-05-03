@@ -75,13 +75,14 @@ function Button({
   };
 
   const isDisabled = disabled || loading;
+  const selectedVariant = variantClasses[variant] || variantClasses.primary;
 
   return (
     <button
       type={type}
       disabled={isDisabled}
       aria-busy={loading}
-      className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+      className={`${baseClasses} ${selectedVariant} ${className}`}
       {...props}
     >
       {loading ? (
@@ -151,3 +152,5 @@ Use `aria-busy` when loading is active.
 The spinner should inherit the button text color so it works on both primary and secondary variants.
 
 Do not add a button library for this. The component is small enough to write.
+
+If the project already has a reusable button, improve that component instead of creating a second button abstraction.

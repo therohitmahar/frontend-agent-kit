@@ -83,17 +83,21 @@ function Button({ children, loading = false, disabled = false, type = "button", 
     secondary: "border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 focus:ring-gray-400",
     danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
   };
+  const selectedVariant = variants[variant] || variants.primary;
 
   return (
     <button
       type={type}
       disabled={disabled || loading}
       aria-busy={loading}
-      className={`inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 ${variants[variant]}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 ${selectedVariant}`}
       {...props}
     >
       {loading ? (
-        <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+        <span
+          className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
+          aria-hidden="true"
+        />
       ) : null}
       {children}
     </button>
@@ -174,3 +178,5 @@ Use info for in-progress or neutral feedback.
 Feedback is required for writes, deletes, uploads, copies, sends, saves, and status changes.
 
 Do not install a toast dependency unless the user explicitly asks for one.
+
+If the project already has a toast utility, extend that one consistent pattern instead of introducing a second feedback system.
